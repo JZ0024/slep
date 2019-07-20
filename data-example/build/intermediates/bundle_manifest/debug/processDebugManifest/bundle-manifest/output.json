@@ -1,0 +1,1 @@
+[{"outputType":{"type":"BUNDLE_MANIFEST"},"apkData":{"type":"MAIN","splits":[],"versionCode":40009,"versionName":"4.0.9","enabled":true,"outputFile":"data-example-debug-40009.apk","fullName":"debug","baseName":"debug"},"path":"AndroidManifest.xml","properties":{"packageId":"com.bose.ar.DataExample","split":"","minSdkVersion":"22"}}]

@@ -1,0 +1,4 @@
+#Fri Jul 19 23:42:55 PDT 2019
+base.0=C\:\\Users\\shanmath\\Downloads\\BoseWearable-Android-bin-4.0.9\\BoseWearable-Android-bin-4.0.9\\data-example\\build\\intermediates\\transforms\\dexMerger\\debug\\8
+path.0=classes.dex
+renamed.0=classes.dex
