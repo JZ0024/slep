@@ -7,7 +7,7 @@ package com.bose.ar.basic_example;
 //  Created by Tambet Ingo on 12/10/2018.
 //  Copyright © 2018 Bose Corporation. All rights reserved.
 //
-
+import android.media.MediaPlayer;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -59,7 +59,7 @@ public class MainFragment extends Fragment {
     private double snr_ratio = 0;
     @Nullable
     private Snackbar mSnackBar;
-
+    private MediaPlayer mediaPlayer;
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +73,7 @@ public class MainFragment extends Fragment {
         if (mDeviceAddress == null && !mUseSimulatedDevice) {
             throw new IllegalArgumentException();
         }
+        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.alarm);
     }
 
     @Nullable
@@ -188,6 +189,7 @@ public class MainFragment extends Fragment {
     }
     private float[] x_acc = new float[15];
     private int x_acc_ptr = 0;
+
     @SuppressWarnings("PMD.ReplaceVectorWithList") // PMD confuses SDK Vector with java.util.Vector
     private void onAccelerometerData(@NonNull final SensorValue sensorValue) {
         final Vector vector = sensorValue.vector();
@@ -222,6 +224,13 @@ public class MainFragment extends Fragment {
         snr_ratio = java.lang.Math.abs(average / standard_dev);
 
         Log.d(TAG, "onAccelerometerData: CURR: " + snr_ratio);
+        double threshold = 500.0;
+
+        if (snr_ratio > threshold){
+
+            mediaPlayer.start();
+
+        }
 
     }
 
