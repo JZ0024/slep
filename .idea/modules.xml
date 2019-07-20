@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BoseWearable.iml" filepath="$PROJECT_DIR$/BoseWearable.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basic-example/basic-example.iml" filepath="$PROJECT_DIR$/basic-example/basic-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data-example/data-example.iml" filepath="$PROJECT_DIR$/data-example/data-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/heading-example/heading-example.iml" filepath="$PROJECT_DIR$/heading-example/heading-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scene-example/scene-example.iml" filepath="$PROJECT_DIR$/scene-example/scene-example.iml" />
+    </modules>
+  </component>
+</project>
