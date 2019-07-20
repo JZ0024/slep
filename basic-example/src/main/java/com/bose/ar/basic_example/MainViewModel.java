@@ -8,6 +8,8 @@ package com.bose.ar.basic_example;
 //  Copyright © 2018 Bose Corporation. All rights reserved.
 //
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.collection.ArraySet;
@@ -32,12 +34,16 @@ import com.bose.wearable.services.wearablesensor.SensorsSuspensionReason;
 import com.bose.wearable.wearabledevice.BaseWearableDeviceListener;
 import com.bose.wearable.wearabledevice.WearableDevice;
 import com.bose.wearable.wearabledevice.WearableDeviceListener;
+import com.bose.wearable.sensordata.GestureData;
+import com.bose.wearable.services.wearablesensor.GestureConfiguration;
 
 import java.util.Collections;
 import java.util.Set;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class MainViewModel extends ViewModel {
-    private static final SamplePeriod SAMPLE_PERIOD = SamplePeriod._20_MS;
+    private static final SamplePeriod SAMPLE_PERIOD = SamplePeriod._320_MS;
 
     @NonNull
     private final BoseWearable mBoseWearable;
@@ -68,6 +74,10 @@ public class MainViewModel extends ViewModel {
                     mRotationData.setValue(sensorValue);
                     break;
             }
+        }
+
+        public void onGestureDataRead(@NonNull final GestureData gestureData) {
+            Log.d(TAG, "gesture detected" + gestureData.type() );
         }
     };
 
@@ -228,6 +238,8 @@ public class MainViewModel extends ViewModel {
 
         wearableDevice.addListener(mSensorDataListener);
         wearableDevice.changeSensorConfiguration(sensorConfiguration);
+        final GestureConfiguration gestureConfiguration = wearableDevice.gestureConfiguration().enableAll();
+        wearableDevice.changeGestureConfiguration(gestureConfiguration);
     }
 
     private void stopMonitoring(@NonNull final WearableDevice wearableDevice,
