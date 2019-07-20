@@ -49,13 +49,9 @@ public class MainFragment extends Fragment {
     private View mParentView;
     @Nullable
     private ProgressBar mProgressBar;
-    private TextView mPitch;
-    private TextView mRoll;
-    private TextView mYaw;
     private TextView mX;
     private TextView mY;
     private TextView mZ;
-    private double past_snr = 0;
     private double snr_ratio = 0;
     @Nullable
     private Snackbar mSnackBar;
@@ -90,10 +86,6 @@ public class MainFragment extends Fragment {
 
         mParentView = view.findViewById(R.id.container);
 
-        mPitch = view.findViewById(R.id.pitch);
-        mRoll = view.findViewById(R.id.roll);
-        mYaw = view.findViewById(R.id.yaw);
-
         mX = view.findViewById(R.id.x);
         mY = view.findViewById(R.id.y);
         mZ = view.findViewById(R.id.z);
@@ -120,9 +112,7 @@ public class MainFragment extends Fragment {
 
         mViewModel.accelerometerData()
             .observe(this, this::onAccelerometerData);
-
-        mViewModel.rotationData()
-            .observe(this, this::onRotationData);
+        
 
         if (mDeviceAddress != null) {
             mViewModel.selectDevice(mDeviceAddress);
@@ -220,7 +210,6 @@ public class MainFragment extends Fragment {
             }
         }
 
-        past_snr = snr_ratio;
         snr_ratio = java.lang.Math.abs(average / standard_dev);
 
         Log.d(TAG, "onAccelerometerData: CURR: " + snr_ratio);
@@ -232,14 +221,6 @@ public class MainFragment extends Fragment {
 
         }
 
-    }
-
-    private void onRotationData(@NonNull final SensorValue sensorValue) {
-        final Quaternion quaternion = Quaternion.multiply(sensorValue.quaternion(), TRANSLATION_Q);
-
-        mPitch.setText(formatAngle(quaternion.xRotation()));
-        mRoll.setText(formatAngle(-quaternion.yRotation()));
-        mYaw.setText(formatAngle(-quaternion.zRotation()));
     }
 
     private void showError(final String message) {
