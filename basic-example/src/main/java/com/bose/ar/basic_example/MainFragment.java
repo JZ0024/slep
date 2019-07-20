@@ -34,6 +34,7 @@ import com.bose.wearable.sensordata.Vector;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
+import java.util.Arrays;
 
 public class MainFragment extends Fragment {
     public static final String ARG_DEVICE_ADDRESS = "device-address";
@@ -54,6 +55,8 @@ public class MainFragment extends Fragment {
     private TextView mX;
     private TextView mY;
     private TextView mZ;
+    private double past_snr = 0;
+    private double snr_ratio = 0;
     @Nullable
     private Snackbar mSnackBar;
 
@@ -183,13 +186,43 @@ public class MainFragment extends Fragment {
 
         mSnackBar = snackbar;
     }
-
+    private float[] x_acc = new float[15];
+    private int x_acc_ptr = 0;
     @SuppressWarnings("PMD.ReplaceVectorWithList") // PMD confuses SDK Vector with java.util.Vector
     private void onAccelerometerData(@NonNull final SensorValue sensorValue) {
         final Vector vector = sensorValue.vector();
         mX.setText(formatValue(vector.x()));
         mY.setText(formatValue(vector.y()));
         mZ.setText(formatValue(vector.z()));
+
+        //Log.d(TAG, "onAccelerometerData: X: " + mX.getText() + " Y: " + mY.getText() + " Z: " + mZ.getText());
+
+        x_acc[x_acc_ptr] = Float.parseFloat(mX.getText().toString());
+        x_acc_ptr = (x_acc_ptr + 1) % 15;
+
+//        Log.d(TAG, "onAccelerometerData: array: " + Arrays.toString(x_acc));
+
+        double standard_dev = 0;
+        float average = 0;
+
+        if (x_acc.length > 0) {
+
+            for (int i = 0; i < x_acc.length; i++) {
+                average += x_acc[i];
+            }
+
+            average /= x_acc.length;
+
+            for (int i = 0; i < x_acc.length; i++) {
+                standard_dev = standard_dev + Math.pow(x_acc[i] - average, 2);
+            }
+        }
+
+        past_snr = snr_ratio;
+        snr_ratio = java.lang.Math.abs(average / standard_dev);
+
+        Log.d(TAG, "onAccelerometerData: CURR: " + snr_ratio);
+
     }
 
     private void onRotationData(@NonNull final SensorValue sensorValue) {
