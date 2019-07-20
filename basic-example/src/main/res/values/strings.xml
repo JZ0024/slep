@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Basic Example</string>
-    <string name="attitude">Attitude</string>
-    <string name="pitch">Pitch</string>
-    <string name="roll">Roll</string>
-    <string name="yaw">Yaw</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="hr">heartRate</string>
     <string name="accelerometer">Accelerometer</string>
     <string name="x">X</string>
     <string name="y">Y</string>
